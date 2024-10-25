@@ -1,5 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import UserCard from './components/UserCard';
+
 
 const App = () => {
   const [theme, setTheme] = useState("light")
@@ -22,10 +24,18 @@ const App = () => {
     setTheme(theme==="dark"?"light":"dark");
     
   }
+  const onEditUser=()=>{
+    setTheme(theme==="dark"?"light":"dark");
+    
+  }
+  const onDeleteUser=()=>{
+    setTheme(theme==="dark"?"light":"dark");
+    
+  }
 
 
   return (
-    <div className='w-full h-screen bg-white dark:bg-black'>
+    <div className='w-full min-h-screen bg-white dark:bg-black'>
       
     <div>
 
@@ -38,7 +48,17 @@ const App = () => {
     />
     </div>
     <div>
-      serar
+
+    <UserCard
+          key="1"
+          user={{
+            "id": 1,
+            "username": "JohnDoe",
+            "email": "johndoe@example.com"
+          }}
+          onEdit={onEditUser}
+          onDelete={onDeleteUser}
+        />
     </div>
     </div>
   )
