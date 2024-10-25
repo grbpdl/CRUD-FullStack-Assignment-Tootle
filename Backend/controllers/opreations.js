@@ -1,6 +1,36 @@
 // /controllers/userController.js
 const con = require('../connection');
 
+//home page
+exports.home = (req, res) => {
+  
+  res.send(`These are the following CRUD endpoints deployed
+    1.POST a user
+    /user
+    {
+    "username": "JohnDoe",
+    "email": "johndoe@example.com"
+  }
+
+    2.GET a user
+    /users
+
+    3. Get a User by ID (GET)
+    /user/:id
+
+    4.Update a User by ID (PUT)
+    /user/:id
+    {
+    "username": "JohnDoe",
+    "email": "johndoe@example.com"
+    }
+
+    5.Delete a User by ID (DELETE)
+    /user/:id
+`);
+ 
+};
+
 // CREATE - Add a new user
 exports.createUser = (req, res) => {
   const { username, email } = req.body;

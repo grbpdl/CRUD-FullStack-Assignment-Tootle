@@ -3,6 +3,10 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/opreations');
 
+
+//home route for backend
+router.get('/',userController.home)
+
 // Route for creating a new user
 router.post('/user', userController.createUser);
 
