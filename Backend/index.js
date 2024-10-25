@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser')
 const crudRouter=require("./routes/crud")
 
 //constants
-const port = process.env.PORT
+const port = process.env.PORT || 3000;
 
 
 //initializing the express
