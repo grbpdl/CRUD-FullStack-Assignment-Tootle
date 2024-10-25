@@ -14,6 +14,7 @@ app.use(cookieParser());
 // Use CRUD routes
 app.use("/", crudRouter);
 
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
