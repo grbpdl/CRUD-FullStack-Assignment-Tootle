@@ -1,7 +1,6 @@
-// src/components/UserForm.js
 import React, { useState, useEffect } from 'react';
 
-const UserForm = ({ user, onClose, onSubmit }) => {
+const UserForm = ({ user, onSubmit }) => {
   const [formData, setFormData] = useState({
     username: '',
     email: ''
@@ -28,7 +27,7 @@ const UserForm = ({ user, onClose, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // Call the parent onSubmit handler
+    onSubmit(formData); 
   };
 
   return (

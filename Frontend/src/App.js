@@ -57,12 +57,12 @@ const App = () => {
     if (loading) return;
     setLoading(true);
     try {
-      await deleteUser(userId); // Pass only the user ID
-      setUsers(users.filter(user => user.id !== userId)); // Update the state to remove the user
+      await deleteUser(userId);
+      setUsers(users.filter(user => user.id !== userId)); 
       toast.success('User deleted successfully');
     } catch (err) {
       if (!err.message.includes('canceled')) {
-        toast.error('Failed to delete user'); // Show error toast
+        toast.error('Failed to delete user'); 
       }
       console.error(err);
     } finally {
@@ -87,7 +87,7 @@ const App = () => {
       } else {
         // Create new user
         const newUser = await createUser(userData);
-        setUsers(prevUsers => [...prevUsers, newUser]); // Using functional update to ensure immediate state update
+        setUsers(prevUsers => [...prevUsers, newUser]); 
         toast.success('User created successfully');
       }
       fetchAllUsers();
@@ -96,7 +96,7 @@ const App = () => {
       console.error(err);
     } finally {
       setLoading(false);
-      handleClosePopup(); // Close popup after submit
+      handleClosePopup(); //closing after submit clicilked
 
     }
   };
@@ -105,7 +105,7 @@ const App = () => {
     <div className="w-full min-h-screen bg-white dark:bg-black overflow-hidden">
       <div className="flex justify-center gap-2 h-auto">
         <p className="text-3xl font-bold text-black dark:text-white p-2">CRUD Operations</p>
-        <div className="flex justify-end p-2">
+        <div className="absolute right-4 top-2 p-2">
           <DarkModeSwitch
             style={{ marginBottom: '2rem' }}
             checked={isDarkMode}
@@ -125,7 +125,7 @@ const App = () => {
         />
 
         {loading ? (
-          <Loader /> // Show the loader while loading
+          <Loader /> 
         ) : (
           <div className="space-y-4">
             {filteredUsers.map(user => (
@@ -150,7 +150,7 @@ const App = () => {
         </button>
       </div>
 
-      {/* Popup Modal */}
+   {/* popup form for subnission */}
       {isOpenPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg max-w-md w-full">

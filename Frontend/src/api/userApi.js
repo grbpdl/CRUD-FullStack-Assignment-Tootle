@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'https://crud-fullstack-assignment-tootle.onrender.com';
-
+//all the crud opreations functions
 // Function to fetch all users
 export const fetchUsers = async () => {
   const response = await axios.get(`${API_URL}/users`);
@@ -16,7 +16,6 @@ export const createUser = async (user) => {
 
 //Function to Delete a user
 export const deleteUser = async (id) => {
-  console.log(id)
   const response = await axios.delete(`${API_URL}/user/${id}`);
   return response.data;
 };
