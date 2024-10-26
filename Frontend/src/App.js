@@ -25,29 +25,34 @@ const App = () => {
     
   }
   const onEditUser=()=>{
-    setTheme(theme==="dark"?"light":"dark");
+    
     
   }
   const onDeleteUser=()=>{
-    setTheme(theme==="dark"?"light":"dark");
+    
     
   }
 
 
   return (
-    <div className='w-full min-h-screen bg-white dark:bg-black'>
+    <div className='w-full min-h-screen bg-white dark:bg-black overflow-hidden'>
+      <div className='flex justify-center  gap-2 h-auto'>
+      <p className='text-3xl font-bold text-black dark:text-white p-2'>
+        Crud Opreations
+      </p>
       
-    <div>
+    <div className='flex justify-end p-2'>
 
      <DarkModeSwitch
 
       style={{ marginBottom: '2rem' }}
       checked={isDarkMode}
       onChange={handleThemeSwitch}
-      size={80}
+      size={40}
     />
     </div>
-    <div>
+    </div>
+    <div className='p-3'>
 
     <UserCard
           key="1"
