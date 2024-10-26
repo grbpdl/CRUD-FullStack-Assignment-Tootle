@@ -5,7 +5,7 @@ import UserForm from './components/UserForm';
 import { fetchUsers, createUser, deleteUser, updateUser } from './api/userApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from './components/Loader'; // Ensure this is the correct path
+import Loader from './components/Loader';
 
 const App = () => {
   const [theme, setTheme] = useState("dark");
@@ -16,58 +16,49 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Toggle dark mode based on the theme
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     setDarkMode(theme === "dark");
   }, [theme]);
 
-  // Fetch users from API
   useEffect(() => {
-    const fetchAllUsers = async () => {
-      setLoading(true);
-      try {
-        const usersData = await fetchUsers();
-        setUsers(usersData);
-      } catch (error) {
-       
-        if (!error.message.includes('canceled')) {
-          console.log("herr")
-          toast.error('Failed to fetch users'); // Show error toast
-        }
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
     fetchAllUsers();
-  }, []); // No dependencies to avoid calling fetchAllUsers multiple times
+  }, []);
 
-  // Filter users based on the search term
+  const fetchAllUsers = async () => {
+    setLoading(true);
+    try {
+      const usersData = await fetchUsers();
+      setUsers(usersData);
+    } catch (error) {
+      toast.error('Failed to fetch users');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const filteredUsers = users.filter(user =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    user.username && user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Handle edit user
   const onEditUser = (user) => {
     setCurrentUser(user);
     setOpenPopup(true);
   };
 
-  // Handle add new user
   const onAddUser = () => {
     setCurrentUser(null);
     setOpenPopup(true);
   };
 
-  // Handle user deletion
   const onDeleteUser = async (userId) => {
     if (loading) return;
     setLoading(true);
     try {
-      await deleteUser(userId);
-      setUsers(users.filter(user => user.id !== userId));
+      await deleteUser(userId); // Pass only the user ID
+      setUsers(users.filter(user => user.id !== userId)); // Update the state to remove the user
       toast.success('User deleted successfully');
     } catch (err) {
       if (!err.message.includes('canceled')) {
@@ -79,35 +70,34 @@ const App = () => {
     }
   };
 
-  // Close the popup
   const handleClosePopup = () => {
     setOpenPopup(false);
     setCurrentUser(null);
   };
 
-  // Handle form submission
   const handleFormSubmit = async (userData) => {
     if (loading) return;
     setLoading(true);
     try {
       if (currentUser) {
+        // Update existing user
         const updatedUser = await updateUser(userData, currentUser.id);
         setUsers(users.map(user => (user.id === currentUser.id ? updatedUser : user)));
         toast.success('User updated successfully');
       } else {
+        // Create new user
         const newUser = await createUser(userData);
-        setUsers([...users, newUser]);
+        setUsers(prevUsers => [...prevUsers, newUser]); // Using functional update to ensure immediate state update
         toast.success('User created successfully');
       }
-      setOpenPopup(false);
+      fetchAllUsers();
     } catch (err) {
-      if (!err.message.includes('canceled')) {
-        console.log("her2")
-        toast.error(currentUser ? 'Failed to update user' : 'Failed to create user'); // Show error toast
-      }
+      toast.error(currentUser ? 'Failed to update user' : 'Failed to create user');
       console.error(err);
     } finally {
       setLoading(false);
+      handleClosePopup(); // Close popup after submit
+
     }
   };
 
@@ -179,8 +169,6 @@ const App = () => {
           </div>
         </div>
       )}
-
-      {/* Toast Container */}
       <ToastContainer />
     </div>
   );

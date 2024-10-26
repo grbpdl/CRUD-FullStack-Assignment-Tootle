@@ -15,8 +15,9 @@ export const createUser = async (user) => {
 };
 
 //Function to Delete a user
-export const deleteUser = async (user,id) => {
-  const response = await axios.delete(`${API_URL}/user/${id}`, user);
+export const deleteUser = async (id) => {
+  console.log(id)
+  const response = await axios.delete(`${API_URL}/user/${id}`);
   return response.data;
 };
 //Function to Update a user
