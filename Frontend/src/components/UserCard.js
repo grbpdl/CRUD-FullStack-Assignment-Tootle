@@ -10,13 +10,13 @@ const UserCard = ({ user, onEdit, onDelete }) => {
             onClick={() => onEdit(user)}
             className="p-2 text-blue-500 hover:text-blue-700"
           >
-            <p>Edit</p>
+            Edit
           </button>
           <button
             onClick={() => onDelete(user.id)}
             className="p-2 text-red-500 hover:text-red-700"
           >
-            <p>Delete</p>
+            Delete
           </button>
         </div>
       </div>
